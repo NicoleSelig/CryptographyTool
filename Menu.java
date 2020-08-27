@@ -1,7 +1,7 @@
 
 public class Menu {
 
-    String [] menuItems = {"Ceasar Cypher -- C", "Substitution Cypher -- S", "Quit - Q"};
+    String [] menuItems = {"Ceasar Cypher -- C", "Substitution Cypher -- S", "Home  -- H", "Quit -- Q"};
    
     //presents the Cipher Menu
     public void initCipherMenu(){
@@ -27,7 +27,11 @@ public class Menu {
             case "q":
             case "Q":
                 System.out.println("Quit");
+                System.exit(0);
                 break;
+            case "h":
+            case "H":
+                initCipherMenu();
             default:
                 System.out.println("Invalid Choice. Try Again");
         }  
