@@ -1,10 +1,10 @@
 
-public class CipherMenu {
+public class Menu {
 
     String [] menuItems = {"Ceasar Cypher -- C", "Substitution Cypher -- S", "Quit - Q"};
    
     //presents the Cipher Menu
-    public void init(){
+    public void initCipherMenu(){
         System.out.println("Which Cypher did you want to use?");
         System.out.println("");
 
@@ -14,7 +14,7 @@ public class CipherMenu {
     }
 
     //Recieves user's menu choice and picks a Cipher
-    public void choose(String menuItem) {
+    public void chooseCipher(String menuItem) {
         switch(menuItem) {
             case "c":
             case "C":

@@ -4,18 +4,17 @@ import java.util.*;
 public class Main {
 
 public static void main(final String[] args) {
-    CipherMenu cipherMenu = new CipherMenu();
+    Menu menu = new Menu();
     
-
     System.out.println("Cryptography Tool");
     System.out.println("By Nicole Selig");
     System.out.println("");
 
-    cipherMenu.init();
+    menu.initCipherMenu();
     Scanner scan = new Scanner(System.in);
     String menuItem = scan.nextLine();
     scan.close();
-    cipherMenu.choose(menuItem);
+    menu.chooseCipher(menuItem);
     
 }
 
