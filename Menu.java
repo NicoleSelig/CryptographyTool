@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Menu {
 
-    String [] cipherMenuItems = {"Ceasar Cypher -- C", "Substitution Cypher -- S", "Home  -- H", "Quit -- Q"};
-    String [] cryptMenuItems = {"Encrypt -- E"," Decrypt -- D", "Home -- H", "Quit -- Q"};
+    String [] cipherMenuItems = {"Ceasar Cipher -- C", "Substitution Cipher -- S", "Affine Cipher -- A", "Vigenere Cipher -- V" ,"Home  -- H", "Quit -- Q"};
+    String [] cryptMenuItems = {"Encrypt -- E","Decrypt -- D", "Home -- H", "Quit -- Q"};
     
     //presents the Cipher Menu
     public void initCipherMenu(){
@@ -15,7 +15,7 @@ public class Menu {
             System.out.println(cipherMenuItems[i]);
         }
     }
-    
+
     //presents the crypt menu
     public void initCryptMenu(){
         System.out.println("");
@@ -29,9 +29,9 @@ public class Menu {
 
     //Recieves user's menu choice and picks a Cipher
     public void chooseCipher() {
-        Scanner scan = new Scanner(System.in);
-        String menuItem = scan.next();
-        switch(menuItem) {
+        Scanner scanCipher = new Scanner(System.in);
+        String menuItem = scanCipher.next();
+        switch (menuItem) {
             case "c":
             case "C":
                 System.out.println("Ceasar Cipher");
@@ -44,9 +44,22 @@ public class Menu {
                 initCryptMenu();
                 chooseCrypt();
                 break;
+            case "a":
+            case "A":
+                System.out.println("Affine Cipher");
+                initCryptMenu();
+                chooseCrypt();
+                break;
+            case "v":
+            case "V":
+                System.out.println("Vigenere Cipher");
+                initCryptMenu();
+                chooseCrypt();
+                break;
             case "q":
             case "Q":
                 System.out.println("Quit");
+                scanCipher.close();
                 System.out.println("Good Bye!");
                 System.exit(0);
                 break;
@@ -60,33 +73,29 @@ public class Menu {
                 System.out.println("Invalid Choice. Try Again");
                 chooseCipher();
                 break;
-        }  
+        }
     }
-    
-    //recieves the users choice chooses a crypt
+
+    // recieves the users choice chooses a crypt
     public void chooseCrypt() {
-        Scanner scan = new Scanner(System.in);
-        String menuItem = scan.next();
+        final Scanner scanCrypt = new Scanner(System.in);
+        final String menuItem = scanCrypt.next();
         switch(menuItem) {
             case "e":
             case "E":
                 System.out.println("Encrypt");
-                scan.close();
                 break;
             case "d":
             case "D":
                 System.out.println("Decrypt");
-                scan.close();
                 break;
             case "q":
             case "Q":
-                System.out.println("Quit");
-                scan.close();
+                scanCrypt.close();
                 System.exit(0);
                 break;
             case "h":
             case "H":
-                System.out.println("Home");
                 initCipherMenu();
                 chooseCipher();
                 break;
