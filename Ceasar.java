@@ -23,13 +23,13 @@ public class Ceasar {
         switch(crypt){
             case "e":
             case "E":
-                System.out.println("Entered Switch Encrypting");
                 String encryption = encrypt(text, key);
                 System.out.println(encryption);
                 break;
             case "d":
             case "D":
-                decrypt(text);
+                String decryption = decrypt(text, key);
+                System.out.println(decryption);
                 break;
             default:
                 System.out.println("Error with Ceasar Initialization");
@@ -61,7 +61,12 @@ public class Ceasar {
 	  return c;
     }
 
-    private void decrypt(String message) {
-        System.out.println("Decrypting " + message);
+    private String decrypt(String m, int k) {
+        System.out.println("Decrypting " + m);
+        k = 26 - k;
+        String answer = "";
+        for (int i = 0; i < m.length(); i++)
+            answer = answer + shiftLetter(m.charAt(i),k);
+        return answer;
     }
 }
