@@ -19,7 +19,6 @@ public class Main {
         message.printMessage(text);
 
         menu.initCipherMenu();
-        menu.chooseCipher();
     }
 
 }
