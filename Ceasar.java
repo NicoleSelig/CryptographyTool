@@ -24,7 +24,8 @@ public class Ceasar {
             case "e":
             case "E":
                 System.out.println("Entered Switch Encrypting");
-                encrypt(text, key);
+                String encryption = encrypt(text, key);
+                System.out.println(encryption);
                 break;
             case "d":
             case "D":
@@ -35,26 +36,27 @@ public class Ceasar {
         }
     }
 
-    private void encrypt(String message, int key) {
-        System.out.println("Encrypting " + message);
-        
-        //code gets stuck here...infinite loop
-        // for (int i = 0; i < message.length(); i++)
-        //     message = message + shift(message.charAt(i), key);
-        // System.out.println(message);
+    private String encrypt(String m, int k) {
+        System.out.println("Encrypting " + m);
+
+        String answer = "";
+        for (int i = 0; i < m.length(); i++)
+            answer = answer + shiftLetter(m.charAt(i),k);
+        return answer;
     }
 
-    char shift(char c, int k)
-    {
-	  if('a'<=c && c<='z')
+    private char shiftLetter(char c, int k){
+        if('a'<=c && c<='z')
 	  {
 		  c=(char)((int)c+k);
-		  if(c>'z') c=(char)((int)c-26);
+          if(c>'z') 
+            c=(char)((int)c-26);
 	  }
 	  if('A'<=c && c<='Z')
 	  {
 		  c=(char)((int)c+k);
-		  if(c>'Z') c=(char)((int)c-26);
+          if(c>'Z') 
+            c=(char)((int)c-26);
 	  }
 	  return c;
     }
