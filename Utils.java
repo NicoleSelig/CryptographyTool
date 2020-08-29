@@ -5,10 +5,11 @@ import java.io.FileNotFoundException;
 public class Utils {
 
     public String getFilePath(){
-        final Scanner inputScan = new Scanner(System.in);
+        Scanner inputScan = new Scanner(System.in);
         System.out.println("What is the filename you want to analyze?");
+        
         final String filePath = inputScan.nextLine();
-        return filePath;
+        return filePath;  
     }
 
     public String getMessage(String filePath){
@@ -24,8 +25,13 @@ public class Utils {
         } catch (FileNotFoundException e) {
             System.out.println("getMessage: Error Getting the message from file");
             e.printStackTrace();
+            System.exit(1);
         }
         return message;
+    }
+
+    public void updateFile (String filepath, String string) {
+        System.out.println("Update File");
     }
 
 }

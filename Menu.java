@@ -15,7 +15,6 @@ public class Menu {
         for (int i = 0; i <= cipherMenuItems.length - 1; i++){
             System.out.println(cipherMenuItems[i]);
         }
-
         chooseCipher();
     }
 
@@ -28,7 +27,6 @@ public class Menu {
         for (int i = 0; i <= cryptMenuItems.length - 1; i++){
             System.out.println(cryptMenuItems[i]);
         }
-
         return chooseCrypt();
     }
 
@@ -84,15 +82,16 @@ public class Menu {
         switch(menuItem) {
             case "e":
             case "E":
-                System.out.println("Encrypt");
+                System.out.println("choose Encrypt");
                 return menuItem;
             case "d":
             case "D":
-                System.out.println("Decrypt");
+                System.out.println("choose Decrypt");
                 return menuItem;
             case "q":
             case "Q":
                 scanCrypt.close();
+                System.out.println("Good Bye!");
                 System.exit(0);
                 return menuItem;
             case "h":
