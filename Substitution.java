@@ -22,7 +22,7 @@ public class Substitution {
         switch(cryptChoice){
             case "e":
             case "E":
-                String encryption = encrypt(text, keyArray);
+                String encryption = encrypt(text, keyArray, text);
                 System.out.println(encryption);
                 break;
             case "d":
@@ -35,14 +35,22 @@ public class Substitution {
         }
     }
 
-    private String encrypt(String  m, String[] keyArray) {
+    private String encrypt(String  m, String[] keyArray, String text) {
         System.out.println("Encrypting " + m); 
         String answer = "";
-        ArrayList<String> newAlphabet = getNewAlphabet(alphabet,keyArray);
-        System.out.println(newAlphabet);
+        ArrayList<String> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
+        System.out.println(cipherAlphabet);
+
+        String character = "F";
+
+        String newChar = substitute(character, cipherAlphabet);
+
+        System.out.println(newChar);
+
         return answer;
     }
 
+    //private helper function that creates a new 'substitution' alphabet using a keyword.
     private ArrayList<String> getNewAlphabet(String[] alphabet, String[] keyArray)
     {
         System.out.println("Creating new alphabet...");
@@ -56,7 +64,6 @@ public class Substitution {
         {
             alphaSub.add(keyArray[i]);
         }
-        System.out.println(alphaSub);
      
         //set the rest of the alphabet
         //if the letter in the alphabet does not exist in the key, insert it into the substitution alphabet
@@ -69,6 +76,28 @@ public class Substitution {
             }
         }
         return alphaSub;
+    }
+
+    private String substitute(String c, ArrayList<String> newAlpha)
+    { 
+        Object [] newAlphaArr= newAlpha.toArray();
+        char charc = c.charAt(0);
+        String newCharacter = "";
+        if('a'<=charc && charc<='z')
+        {
+            int index = Arrays.binarySearch(alphabet, c);
+            System.out.println(index);
+            newCharacter = (String) newAlphaArr[index];
+            newCharacter = newCharacter.toLowerCase();
+        }
+        if('A'<=charc && charc <='Z')
+        {
+            int index = Arrays.binarySearch(alphabet, c.toLowerCase());
+            System.out.println(index);
+            newCharacter = (String) newAlphaArr[index];
+            newCharacter = newCharacter.toUpperCase();
+        }
+        return newCharacter;  
     }
 
     private String decrypt(String m) {
