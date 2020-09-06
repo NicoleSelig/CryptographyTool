@@ -62,7 +62,6 @@ public class Substitution {
     //the index of the old alphabet = the index of the new alphabet
     private char substitute(char c, List<Character> oldAlpha, List<Character> newAlpha)
     { 
-        System.out.println("Performing Substitution...");
         Character newCharacter = null;
 
         if('a'<=c && c<='z')

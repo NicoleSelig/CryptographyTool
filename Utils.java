@@ -54,6 +54,15 @@ public class Utils {
         return key;
     }
 
+    public int getA()
+    {
+        Scanner scanConstant = new Scanner(System.in);
+        System.out.println("Enter your constant: ");
+        int constant = scanConstant.nextInt();
+        System.out.println("Constant is " + constant);
+        return constant;
+    }
+
 
     public void updateFile (String filepath, String string) {
         System.out.println("Update File");
