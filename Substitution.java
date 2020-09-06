@@ -5,30 +5,30 @@ import java.util.List;
 public class Substitution {
     Menu menu = new Menu();
     Utils utils = new Utils();
-    String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","o","p","q","r","s","t","u","v","w","x","y","z"};
-    List<String> alphaList = Arrays.asList(alphabet);
+    Character[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    List<Character> alphaList = Arrays.asList(alphabet);
 
     public void init(){
         System.out.println("Substitution Cipher");
-        String filepath = utils.getFilePathFromFile();
-        String text = utils.getMessageFromFile(filepath);
+        final String filepath = utils.getFilePathFromFile();
+        final String text = utils.getMessageFromFile(filepath);
 
-        String cryptChoice = menu.initCryptMenu();
+        final String cryptChoice = menu.initCryptMenu();
 
-        String key = utils.getStringKey();
+        final String key = utils.getStringKey();
         
-        String [] keyArray = key.split("(?!^)");
+        final String [] keyArray = key.split("(?!^)");
         
       
         switch(cryptChoice){
             case "e":
             case "E":
-                String encryption = encrypt(text, keyArray);
+                final String encryption = encrypt(text, keyArray);
                 System.out.println(encryption);
                 break;
             case "d":
             case "D":
-                String decryption = decrypt(text, keyArray);
+                final String decryption = decrypt(text, keyArray);
                 System.out.println(decryption);
                 break;
             default:
@@ -36,11 +36,12 @@ public class Substitution {
         }
     }
 
-    private String encrypt(String  m, String[] keyArray) {
+    private String encrypt(final String  m, String[] keyArray) {
         System.out.println("Encrypting " + m); 
         String answer = "";
-        List<String> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
+        final List<Character> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
         System.out.println(cipherAlphabet);
+        System.out.println(alphaList);
 
         for (int i = 0; i < m.length(); i++)
             answer = answer + substitute(m.charAt(i), alphaList, cipherAlphabet);
@@ -48,12 +49,13 @@ public class Substitution {
         return answer;
     }
 
-    private String decrypt(String m, String[] keyArray) {
+    private String decrypt(final String m, final String[] keyArray) {
         System.out.println("Decrypting " + m);
     
         String answer = "";
-        List<String> cipherAlphabet = getNewAlphabet(alphabet, keyArray);
+        List<Character> cipherAlphabet = getNewAlphabet(alphabet, keyArray);
         System.out.println(cipherAlphabet);
+        System.out.println(alphaList);
 
         for (int i = 0; i < m.length(); i++)
             answer = answer + substitute(m.charAt(i), cipherAlphabet, alphaList);
@@ -63,36 +65,34 @@ public class Substitution {
 
      //helper function that substitutes a chararcter from an alphabet array.
     //the index of the old alphabet = the index of the new alphabet
-    private String substitute(char c, List<String> oldAlpha, List<String> newAlpha)
+    private char substitute(char c, List<Character> oldAlpha, List<Character> newAlpha)
     { 
-        Object [] oldAlphaArr = oldAlpha.toArray();
-        Object [] newAlphaArr= newAlpha.toArray();
-        String newCharacter = "";
-        String stringc = Character.toString(c);
-        System.out.println("character: " + stringc);
+        Character newCharacter = null;
+        //System.out.println("character: " + c);
         if('a'<=c && c<='z')
         {
-            int index = Arrays.binarySearch(oldAlphaArr, Character.toString(c));
-            System.out.println("index " + index);
-            newCharacter = (String) newAlphaArr[index];
-            newCharacter = newCharacter.toLowerCase();
+            int index = oldAlpha.indexOf(c);
+            //System.out.println("index " + index);
+            newCharacter = newAlpha.get(index);
         }
         else if('A'<=c && c <='Z')
         {
-            int index = Arrays.binarySearch(oldAlphaArr, Character.toString(c).toLowerCase());
-            System.out.println("index " + index);
-            newCharacter = (String) newAlphaArr[index];
-            newCharacter = newCharacter.toUpperCase();
+            //System.out.println("character: " + c);
+            int index = oldAlpha.indexOf(Character.toLowerCase(c));
+            //System.out.println("index " + index);
+            newCharacter = Character.toUpperCase(newAlpha.get(index));
         }
-        System.out.println("newCharacter: " + newCharacter);
+        else
+          newCharacter = c;
+        //System.out.println("newCharacter: " + newCharacter);
         return newCharacter;  
     }
 
      //private helper function that creates a new 'substitution' alphabet using a keyword.
-     private ArrayList<String> getNewAlphabet(String[] alphabet, String[] keyArray)
+     private ArrayList<Character> getNewAlphabet(Character[] alphabet, String[] keyArray)
      {
          System.out.println("Creating new alphabet...");
-         ArrayList<String> alphaSub = new ArrayList<>();
+         ArrayList<Character> alphaSub = new ArrayList<>();
  
          //convert the key to a list of strings
          List<String> keyList = Arrays.asList(keyArray);
@@ -100,18 +100,20 @@ public class Substitution {
          //set the key for the first part of the new alphabet
          for (int i = 0; i < keyArray.length; i++ )
          {
-             alphaSub.add(keyArray[i]);
+             alphaSub.add(keyArray[i].charAt(0));
          }
       
          //set the rest of the alphabet
          //if the letter in the alphabet does not exist in the key, insert it into the substitution alphabet
          for (int i = 0; i < alphabet.length; i++)
          {
-             Boolean doesNotexist = !keyList.contains(alphabet[i]);
+             //System.out.println(alphaList.get(i));
+             Boolean doesNotexist = !keyList.contains(alphaList.get(i).toString());
+            // System.out.println(doesNotexist);
              if(doesNotexist)
              {
                  alphaSub.add(alphabet[i]);
-             }
+             }  
          }
          return alphaSub;
      }
