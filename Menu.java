@@ -37,19 +37,18 @@ public class Menu {
         switch (menuItem) {
             case "c":
             case "C":
-                System.out.println("Ceasar Cipher");
                 Ceasar ceasar = new Ceasar();
                 ceasar.init();
                 break;
             case "s":
             case "S":
-                System.out.println("Substitution Cipher");
-                initCryptMenu();
+                Substitution sub = new Substitution();
+                sub.init();
                 break;
             case "a":
             case "A":
-                System.out.println("Affine Cipher");
-                initCryptMenu();
+                Affine affine = new Affine();
+                affine.init();
                 break;
             case "v":
             case "V":

@@ -1,26 +1,18 @@
-import java.util.Scanner;
-
 public class Ceasar {
 
     Menu menu = new Menu();
     Utils utils = new Utils();
 
     public void init(){
-        String filepath = utils.getFilePath();
-        String text = utils.getMessage(filepath);
+        System.out.println("Ceasar Cipher");
+        String filepath = utils.getFilePathFromFile();
+        String text = utils.getMessageFromFile(filepath);
 
-        String crypt = menu.initCryptMenu();
-        System.out.println("Decrypt or Crypt? " + crypt);
+        String cryptChoice = menu.initCryptMenu();
 
-        Scanner scanKey = new Scanner(System.in);
-        System.out.println("Enter your key (1-25)");
+        int key = utils.getIntKey();
         
-        int key;
-        key = scanKey.nextInt();
-
-        System.out.println("Key is " + key);
-        
-        switch(crypt){
+        switch(cryptChoice){
             case "e":
             case "E":
                 String encryption = encrypt(text, key);

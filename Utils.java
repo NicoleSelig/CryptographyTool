@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class Utils {
 
-    public String getFilePath(){
+    public String getFilePathFromFile(){
         Scanner inputScan = new Scanner(System.in);
         System.out.println("What is the filename you want to analyze?");
         
@@ -12,7 +12,8 @@ public class Utils {
         return filePath;  
     }
 
-    public String getMessage(String filePath){
+    public String getMessageFromFile(String filePath)
+    {
     
         String message = "";
         try {
@@ -30,8 +31,40 @@ public class Utils {
         return message;
     }
 
+    public int getIntKey()
+    {
+        Scanner scanKey = new Scanner(System.in);
+        System.out.println("Enter your key (1-25)");
+        
+        int key;
+        key = scanKey.nextInt();
+
+        System.out.println("Key is " + key);
+        return key;
+    }
+
+    public String getStringKey()
+    {
+        Scanner scanKey = new Scanner(System.in);
+        System.out.println("Enter your key: ");
+        
+        String key;
+        key = scanKey.next();
+        System.out.println("Key is " + key);
+        return key;
+    }
+
+
     public void updateFile (String filepath, String string) {
         System.out.println("Update File");
     }
+
+    // public void printStringArray(ArrayList<String> alphaSub){
+    //     String printed = "";
+    //     for(int i=0; i < alphaSub.length; i++){
+    //         printed += alphaSub[i];
+    //     }
+    //     System.out.println(printed);
+    // }
 
 }

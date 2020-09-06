@@ -9,11 +9,19 @@ public class Message {
         this.message = message;
     }
 
-    public void printMessage(String message){
-        System.out.println(message);
+    public String getMessage(){
+        return message;
     }
 
-    public void printFilePath(String filePath){
+    public String getFilePath(){
+        return filePath;
+    }
+
+    public void printMessage(){
+       System.out.println(message);
+    }
+
+    public void printFilePath(){
         System.out.println(filePath);
     }
 
