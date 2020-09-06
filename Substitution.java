@@ -10,25 +10,25 @@ public class Substitution {
 
     public void init(){
         System.out.println("Substitution Cipher");
-        final String filepath = utils.getFilePathFromFile();
-        final String text = utils.getMessageFromFile(filepath);
+        String filepath = utils.getFilePathFromFile();
+        String text = utils.getMessageFromFile(filepath);
 
-        final String cryptChoice = menu.initCryptMenu();
+        String cryptChoice = menu.initCryptMenu();
 
-        final String key = utils.getStringKey();
+        String key = utils.getStringKey();
         
-        final String [] keyArray = key.split("(?!^)");
+        String [] keyArray = key.split("(?!^)");
         
       
         switch(cryptChoice){
             case "e":
             case "E":
-                final String encryption = encrypt(text, keyArray);
+                String encryption = encrypt(text, keyArray);
                 System.out.println(encryption);
                 break;
             case "d":
             case "D":
-                final String decryption = decrypt(text, keyArray);
+                String decryption = decrypt(text, keyArray);
                 System.out.println(decryption);
                 break;
             default:
@@ -39,10 +39,8 @@ public class Substitution {
     private String encrypt(final String  m, String[] keyArray) {
         System.out.println("Encrypting " + m); 
         String answer = "";
-        final List<Character> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
-        System.out.println(cipherAlphabet);
-        System.out.println(alphaList);
-
+        List<Character> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
+       
         for (int i = 0; i < m.length(); i++)
             answer = answer + substitute(m.charAt(i), alphaList, cipherAlphabet);
 
@@ -51,11 +49,8 @@ public class Substitution {
 
     private String decrypt(final String m, final String[] keyArray) {
         System.out.println("Decrypting " + m);
-    
         String answer = "";
         List<Character> cipherAlphabet = getNewAlphabet(alphabet, keyArray);
-        System.out.println(cipherAlphabet);
-        System.out.println(alphaList);
 
         for (int i = 0; i < m.length(); i++)
             answer = answer + substitute(m.charAt(i), cipherAlphabet, alphaList);
@@ -67,24 +62,22 @@ public class Substitution {
     //the index of the old alphabet = the index of the new alphabet
     private char substitute(char c, List<Character> oldAlpha, List<Character> newAlpha)
     { 
+        System.out.println("Performing Substitution...");
         Character newCharacter = null;
-        //System.out.println("character: " + c);
+
         if('a'<=c && c<='z')
         {
             int index = oldAlpha.indexOf(c);
-            //System.out.println("index " + index);
             newCharacter = newAlpha.get(index);
         }
         else if('A'<=c && c <='Z')
         {
-            //System.out.println("character: " + c);
             int index = oldAlpha.indexOf(Character.toLowerCase(c));
-            //System.out.println("index " + index);
             newCharacter = Character.toUpperCase(newAlpha.get(index));
         }
         else
           newCharacter = c;
-        //System.out.println("newCharacter: " + newCharacter);
+
         return newCharacter;  
     }
 
@@ -107,9 +100,7 @@ public class Substitution {
          //if the letter in the alphabet does not exist in the key, insert it into the substitution alphabet
          for (int i = 0; i < alphabet.length; i++)
          {
-             //System.out.println(alphaList.get(i));
              Boolean doesNotexist = !keyList.contains(alphaList.get(i).toString());
-            // System.out.println(doesNotexist);
              if(doesNotexist)
              {
                  alphaSub.add(alphabet[i]);
