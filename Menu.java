@@ -52,7 +52,8 @@ public class Menu {
                 break;
             case "v":
             case "V":
-                System.out.println("Vigenere Cipher");
+                Veginere veginere = new Veginere();
+                veginere.init();
                 initCryptMenu();
                 break;
             case "q":

@@ -3,6 +3,7 @@ public class Main {
     
     public static void main(final String[] args) {
         Menu menu = new Menu();
+        LetterFrequency lf = new LetterFrequency();
 
         System.out.println("");
         System.out.println("Classical Encryption Tool");

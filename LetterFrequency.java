@@ -1,39 +1,34 @@
-import java.util.*;
+import java.util.HashMap;
 
 public class LetterFrequency {
-    
-    Hashmap<Character, Float> lf = new Hashmap<Character, Float>();
 
-    public void initLetterFrequencies(){
-        lf.
-        
+    public void initLetterFreqMap(){
+        HashMap<Character, Double> lf = new HashMap<Character,Double>();
+        lf.put('e', 12.702);
+        lf.put('t', 9.056);
+        lf.put('a', 8.167);
+        lf.put('o', 7.507);
+        lf.put('i', 6.966);
+        lf.put('n', 6.749);
+        lf.put('s', 6.327);
+        lf.put('h', 6.094);
+        lf.put('r', 5.987);
+        lf.put('d', 4.253);
+        lf.put('l', 4.025);
+        lf.put('c', 2.782);
+        lf.put('u', 2.758);
+        lf.put('m', 2.406);
+        lf.put('w', 2.360);
+        lf.put('f', 2.228);
+        lf.put('g', 2.015);
+        lf.put('y', 1.974);
+        lf.put('p', 1.929);
+        lf.put('b', 1.492);
+        lf.put('v', 0.978);
+        lf.put('k', 0.772);
+        lf.put('j', 0.153);
+        lf.put('x', 0.150);
+        lf.put('q', 0.095);
+        lf.put('z', 0.074);
     }
-// Letter Frequency (%) Rank
-// E 12.702 1
-// T 9.056 2
-// A 8.167 3
-// O 7.507 4
-// I 6.966 5
-// N 6.749 6
-// S 6.327 7
-// H 6.094 8
-// R 5.987 9
-// D 4.253 10
-// L 4.025 11
-// C 2.782 12
-// U 2.758 13
-// M 2.406 14
-// W 2.360 15
-// F 2.228 16
-// G 2.015 17
-// Y 1.974 18
-// P 1.929 19
-// B 1.492 20
-// V 0.978 21
-// K 0.772 22
-// J 0.153 23
-// X 0.150 24
-// Q 0.095 25
-// Z 0.074 26
-   
 }
