@@ -7,8 +7,8 @@ public class Utils {
     public String getFilePathFromFile(){
         Scanner inputScan = new Scanner(System.in);
         System.out.println("What is the filename you want to analyze?");
-        
         final String filePath = inputScan.nextLine();
+        System.out.println("filepath: " + filePath);
         return filePath;  
     }
 
@@ -18,6 +18,7 @@ public class Utils {
         String message = "";
         try {
             File file = new File(filePath);
+            System.out.println("file exist? " + file.exists());
             Scanner cin = new Scanner(file);
             while (cin.hasNextLine()){
                 message = message + "" + cin.nextLine();
@@ -26,6 +27,7 @@ public class Utils {
         } catch (FileNotFoundException e) {
             System.out.println("getMessage: Error Getting the message from file");
             e.printStackTrace();
+            e.getCause();
             System.exit(1);
         }
         return message;
@@ -68,12 +70,6 @@ public class Utils {
         System.out.println("Update File");
     }
 
-    // public void printStringArray(ArrayList<String> alphaSub){
-    //     String printed = "";
-    //     for(int i=0; i < alphaSub.length; i++){
-    //         printed += alphaSub[i];
-    //     }
-    //     System.out.println(printed);
-    // }
+    
 
 }

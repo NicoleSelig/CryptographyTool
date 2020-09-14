@@ -2,8 +2,9 @@ import java.util.HashMap;
 
 public class LetterFrequency {
 
+
+    HashMap<Character, Double> lf = new HashMap<Character,Double>();
     public void initLetterFreqMap(){
-        HashMap<Character, Double> lf = new HashMap<Character,Double>();
         lf.put('e', 12.702);
         lf.put('t', 9.056);
         lf.put('a', 8.167);
@@ -31,4 +32,54 @@ public class LetterFrequency {
         lf.put('q', 0.095);
         lf.put('z', 0.074);
     }
+
+    public void printLFMap(){
+        System.out.println(lf.toString());
+    }
+
+    public double dotProduct(double [] a, double []b)
+    {
+        double sum = 0;
+        for(int i =0; i < 26; i++)
+            sum+=a[i]*b[i];
+        return sum;
+    }
+
+    public void countLetters(String m)
+    {
+        //remove spaces from text and convert all to lowercase
+       String lcm = m.replaceAll(" ", "").toLowerCase();
+       System.out.println(lcm);
+
+       HashMap<Character, Integer> charCount = new HashMap<Character, Integer>();
+
+       //convert the string to a char array
+       char[] text = lcm.toCharArray();
+
+       //check each char of the array
+       for (char c : text) 
+       {
+           if (charCount.containsKey(c))
+           {
+               charCount.put(c, charCount.get(c)+1);
+           }
+           else
+           {
+                charCount.put(c,1);
+           }
+       }
+
+       System.out.println(charCount.toString());
+    } 
+
+    public void shift(double [] a)
+    {
+        double temp = a[0];
+        for(int i = 0; i < 25; i++)
+            a[i] = a[i +1];
+        a[25] = temp;
+    }
+
+
+
 }

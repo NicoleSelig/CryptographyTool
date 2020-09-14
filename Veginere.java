@@ -8,8 +8,6 @@ public class Veginere {
         String text = utils.getMessageFromFile(filepath);
 
         String cryptChoice = menu.initCryptMenu();
-
-        int key = utils.getIntKey();
         
         switch(cryptChoice){
             case "e":
@@ -21,10 +19,17 @@ public class Veginere {
             case "D":
                 //String decryption = decrypt(text, key);
                 System.out.println("decryption");
+                decrypt(text);
                 break;
             default:
                 System.out.println("Error with Ceasar Initialization");
         }
-
     }  
+
+    public void decrypt(String m)
+    {
+        System.out.println("Decrypting " + m);
+        LetterFrequency lf = new LetterFrequency();
+        lf.countLetters(m);
+    }
 }
