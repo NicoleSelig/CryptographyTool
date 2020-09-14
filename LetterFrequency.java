@@ -1,10 +1,10 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class LetterFrequency {
 
-
-    HashMap<Character, Double> lf = new HashMap<Character,Double>();
-    public void initLetterFreqMap(){
+    public Map<Character, Double> getLetterFrequencyMap(){
+        HashMap<Character, Double> lf = new HashMap<Character,Double>();
         lf.put('e', 12.702);
         lf.put('t', 9.056);
         lf.put('a', 8.167);
@@ -31,50 +31,42 @@ public class LetterFrequency {
         lf.put('x', 0.150);
         lf.put('q', 0.095);
         lf.put('z', 0.074);
+
+        return lf;
     }
 
-    public void printLFMap(){
-        System.out.println(lf.toString());
-    }
-
-    public double dotProduct(double [] a, double []b)
-    {
+    public double dotProduct(final double[] a, final double[] b) {
         double sum = 0;
-        for(int i =0; i < 26; i++)
-            sum+=a[i]*b[i];
+        for (int i = 0; i < 26; i++)
+            sum += a[i] * b[i];
         return sum;
     }
 
-    public void countLetters(String m)
-    {
-        //remove spaces from text and convert all to lowercase
-       String lcm = m.replaceAll(" ", "").toLowerCase();
-       System.out.println(lcm);
+    public Map<Character, Integer> countLetters(final String m) {
+        // remove spaces from text and convert all to lowercase
+        final String lcm = m.replaceAll(" ", "").toLowerCase();
+        System.out.println(lcm);
 
-       HashMap<Character, Integer> charCount = new HashMap<Character, Integer>();
+        final HashMap<Character, Integer> charCount = new HashMap<Character, Integer>();
 
-       //convert the string to a char array
-       char[] text = lcm.toCharArray();
+        // convert the string to a char array
+        final char[] text = lcm.toCharArray();
 
-       //check each char of the array
-       for (char c : text) 
-       {
-           if (charCount.containsKey(c))
-           {
-               charCount.put(c, charCount.get(c)+1);
-           }
-           else
-           {
-                charCount.put(c,1);
-           }
-       }
+        // check each char of the array
+        for (final char c : text) {
+            if (charCount.containsKey(c)) {
+                charCount.put(c, charCount.get(c) + 1);
+            } else {
+                charCount.put(c, 1);
+            }
+        }
 
-       System.out.println(charCount.toString());
-    } 
+        //System.out.println(charCount.toString());
+        return charCount;
+    }
 
-    public void shift(double [] a)
-    {
-        double temp = a[0];
+    public void shift(final double[] a) {
+        final double temp = a[0];
         for(int i = 0; i < 25; i++)
             a[i] = a[i +1];
         a[25] = temp;
