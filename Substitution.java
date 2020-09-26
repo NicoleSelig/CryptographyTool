@@ -18,7 +18,6 @@ public class Substitution {
         String key = utils.getStringKey();
         
         String [] keyArray = key.split("(?!^)");
-        
       
         switch(cryptChoice){
             case "e":
@@ -94,17 +93,29 @@ public class Substitution {
          {
              alphaSub.add(keyArray[i].charAt(0));
          }
+
+         //find the keywords last letter and its index
+         String keywordLastLetter = keyArray[keyArray.length-1];
+         int keywordLastLetterIndex = alphaList.indexOf(keywordLastLetter.charAt(0));
       
          //set the rest of the alphabet
          //if the letter in the alphabet does not exist in the key, insert it into the substitution alphabet
-         for (int i = 0; i < alphabet.length; i++)
+         for (int i = keywordLastLetterIndex + 1; i < alphabet.length; i++)
          {
-             Boolean doesNotexist = !keyList.contains(alphaList.get(i).toString());
-             if(doesNotexist)
+             Boolean doesNotExist = !keyList.contains(alphaList.get(i).toString());
+             if(doesNotExist)
              {
                  alphaSub.add(alphabet[i]);
              }  
          }
+         for(int i = 0; i < keywordLastLetterIndex; i++){
+            Boolean doesNotExist = !keyList.contains(alphaList.get(i).toString());
+             if(doesNotExist)
+             {
+                alphaSub.add(alphabet[i]);
+             }
+         }
+         //System.out.println("alphaSub = " + alphaSub);
          return alphaSub;
      }
 }

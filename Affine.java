@@ -9,9 +9,11 @@ public class Affine {
 
         String cryptChoice = menu.initCryptMenu();
 
+        //int key = 1;
         int key = utils.getIntKey();
         int a = utils.getA();
-        
+        //int a = 1;
+
         switch(cryptChoice){
             case "e":
             case "E":
@@ -38,7 +40,7 @@ public class Affine {
 
     
     private String decrypt(String m, int k, int a) {
-       System.out.println("Decrypting " + m);
+       //System.out.println("Decrypting " + m);
        String answer = "";
        int multInverse = 0;
        int aInverse = 0;
