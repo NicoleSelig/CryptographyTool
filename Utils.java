@@ -14,7 +14,6 @@ public class Utils {
 
     public String getMessageFromFile(String filePath)
     {
-    
         String message = "";
         try {
             File file = new File(filePath);
@@ -64,7 +63,13 @@ public class Utils {
         System.out.println("Constant is " + constant);
         return constant;
     }
-
+    
+    public String fixString(String str)
+    {
+        str.replaceAll(" ", "");
+        str.replaceAll("\\p{Punct}", "");
+        return str;
+    }
 
     public void updateFile (String filepath, String string) {
         System.out.println("Update File");

@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Substitution {
     Menu menu = new Menu();
     Utils utils = new Utils();
-    Character[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    Character[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+            's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
     List<Character> alphaList = Arrays.asList(alphabet);
 
-    public void init(){
+    public void init() {
         System.out.println("Substitution Cipher");
         String filepath = utils.getFilePathFromFile();
         String text = utils.getMessageFromFile(filepath);
@@ -16,10 +18,10 @@ public class Substitution {
         String cryptChoice = menu.initCryptMenu();
 
         String key = utils.getStringKey();
-        
-        String [] keyArray = key.split("(?!^)");
-      
-        switch(cryptChoice){
+
+        String[] keyArray = key.split("(?!^)");
+
+        switch (cryptChoice) {
             case "e":
             case "E":
                 String encryption = encrypt(text, keyArray);
@@ -35,11 +37,11 @@ public class Substitution {
         }
     }
 
-    private String encrypt(final String  m, String[] keyArray) {
-        System.out.println("Encrypting " + m); 
+    private String encrypt(final String m, String[] keyArray) {
+        System.out.println("Encrypting " + m);
         String answer = "";
-        List<Character> cipherAlphabet = getNewAlphabet(alphabet,keyArray);
-       
+        List<Character> cipherAlphabet = getNewAlphabet(alphabet, keyArray);
+
         for (int i = 0; i < m.length(); i++)
             answer = answer + substitute(m.charAt(i), alphaList, cipherAlphabet);
 
@@ -47,6 +49,12 @@ public class Substitution {
     }
 
     private String decrypt(final String m, final String[] keyArray) {
+        LetterFrequency lf = new LetterFrequency();
+        Map<Character, Double> lfDictionary = lf.getEnglishFrequencyMap();
+        System.out.println("LF Dictionary:\n"+ lfDictionary);
+        
+        lf.findFrequencies(m);
+
         System.out.println("Decrypting " + m);
         String answer = "";
         List<Character> cipherAlphabet = getNewAlphabet(alphabet, keyArray);

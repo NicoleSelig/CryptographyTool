@@ -1,76 +1,135 @@
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
+import java.util.Map.Entry;
 public class LetterFrequency {
 
-    public Map<Character, Double> getLetterFrequencyMap(){
+    public Map<Character, Double> getEnglishFrequencyMap(){
         HashMap<Character, Double> lf = new HashMap<Character,Double>();
-        lf.put('e', 12.702);
-        lf.put('t', 9.056);
-        lf.put('a', 8.167);
-        lf.put('o', 7.507);
-        lf.put('i', 6.966);
-        lf.put('n', 6.749);
-        lf.put('s', 6.327);
-        lf.put('h', 6.094);
-        lf.put('r', 5.987);
-        lf.put('d', 4.253);
-        lf.put('l', 4.025);
-        lf.put('c', 2.782);
-        lf.put('u', 2.758);
-        lf.put('m', 2.406);
-        lf.put('w', 2.360);
-        lf.put('f', 2.228);
-        lf.put('g', 2.015);
-        lf.put('y', 1.974);
-        lf.put('p', 1.929);
-        lf.put('b', 1.492);
-        lf.put('v', 0.978);
-        lf.put('k', 0.772);
-        lf.put('j', 0.153);
-        lf.put('x', 0.150);
-        lf.put('q', 0.095);
-        lf.put('z', 0.074);
-
+        lf.put('e', .12702);
+        lf.put('t', .09056);
+        lf.put('a', .08167);
+        lf.put('o', .07507);
+        lf.put('i', .06966);
+        lf.put('n', .06749);
+        lf.put('s', .06327);
+        lf.put('h', .06094);
+        lf.put('r', .0987);
+        lf.put('d', .04253);
+        lf.put('l', .04025);
+        lf.put('c', .02782);
+        lf.put('u', .02758);
+        lf.put('m', .02406);
+        lf.put('w', .02360);
+        lf.put('f', .02228);
+        lf.put('g', .02015);
+        lf.put('y', .01974);
+        lf.put('p', .01929);
+        lf.put('b', .01492);
+        lf.put('v', .00978);
+        lf.put('k', .00772);
+        lf.put('j', .00153);
+        lf.put('x', .00150);
+        lf.put('q', .00095);
+        lf.put('z', .00074);
         return lf;
     }
 
-    public double dotProduct(final double[] a, final double[] b) {
+    public Double dotProduct(double[] frequencies, double[] frequencies2) {
         double sum = 0;
         for (int i = 0; i < 26; i++)
-            sum += a[i] * b[i];
+            sum += frequencies[i] * frequencies2[i];
         return sum;
     }
 
-    public Map<Character, Integer> countLetters(final String m) {
-        // remove spaces from text and convert all to lowercase
-        final String lcm = m.replaceAll(" ", "").toLowerCase();
-        System.out.println(lcm);
+    public Map<Character, Double> countLetters(final String m) {
+        // remove punctuation from text and convert all to lowercase
+        String words = m.replaceAll("\\p{Punct}", "").toLowerCase();
 
-        final HashMap<Character, Integer> charCount = new HashMap<Character, Integer>();
-
-        // convert the string to a char array
-        final char[] text = lcm.toCharArray();
-
-        // check each char of the array
-        for (final char c : text) {
-            if (charCount.containsKey(c)) {
-                charCount.put(c, charCount.get(c) + 1);
-            } else {
-                charCount.put(c, 1);
-            }
+        HashMap<Character, Double> charCount = new HashMap<Character, Double>();
+        for (char ch = 'a'; ch <= 'z'; ch++){
+            charCount.put(Character.valueOf(ch), 0.0);
         }
 
-        //System.out.println(charCount.toString());
-        return charCount;
+        // convert the string to a char array
+        char[] text = words.toCharArray();
+
+        // check each char of the array and increment in the hashmap
+        for (char c : text) {
+             if (charCount.containsKey(c) && c != ' ') {
+                 charCount.put(c, charCount.getOrDefault(c,0.0) + 1);
+             } else if (c != ' ') {
+                 charCount.put(c, 1.0);
+             }
+         }
+        return charCount; 
+    }
+
+    public double maxValue(double[] cosetFreq)
+    {   
+        double max = Arrays.stream(cosetFreq).max().getAsDouble();
+        return max;
+    }
+
+    public double[] findFrequencies(String m)
+    {
+        m = m.replaceAll(" ", "");
+        //System.out.println(m);
+       //System.out.println("text length: " + m.length());
+
+        Map<Character, Double> charCount = countLetters(m);
+        Double[] counts =(Double[])charCount.values().toArray(new Double[charCount.size()]);
+
+        double[] frequencies = new double[counts.length];
+        //System.out.println("counts: " + Arrays.toString(counts));
+
+        for(int i = 0; i < counts.length; i++){
+            
+            frequencies[i] = (Double) (counts[i] / m.length());
+         
+        }
+        return frequencies;
     }
 
     public void shift(final double[] a) {
         final double temp = a[0];
+    
         for(int i = 0; i < 25; i++)
-            a[i] = a[i +1];
+            a[i] = a[i + 1];
         a[25] = temp;
     }
+    
+    
+    
+    // public Map<Character, Integer> sortcharCountByValues(double[] cosetFrequencies) {
+    //     List<Character> mapKeys = new ArrayList<>(cosetFrequencies.keySet());
+    //     List<Integer> mapValues = new ArrayList<>(cosetFrequencies.values());
+    //     Collections.sort(mapValues);
+    //     Collections.sort(mapKeys);
+
+    //     LinkedHashMap<Character, Integer> sortedMap = new LinkedHashMap<>();
+
+    //     Iterator<Integer> valueIt = mapValues.iterator();
+    //     while (valueIt.hasNext()) {
+    //         int val = valueIt.next();
+    //         Iterator<Character> keyIt = mapKeys.iterator();
+
+    //         while (keyIt.hasNext()) {
+    //             Character key = keyIt.next();
+    //             int comp1 = cosetFrequencies.get(key);
+    //             int comp2 = val;
+
+    //             if (comp1 == comp2){
+    //                 keyIt.remove();
+    //                 sortedMap.put(key,val);
+    //                 break;
+    //             }
+
+    //         }
+    //     }
+    //     System.out.println("Sorted Char Count: \n" + sortedMap);
+    //     return sortedMap;
+    // }
+
+
 
 
 

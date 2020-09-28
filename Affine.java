@@ -1,28 +1,31 @@
+import java.util.Hashtable;
+
 public class Affine {
     Menu menu = new Menu();
     Utils utils = new Utils();
+    Hashtable<Integer, Integer> multInverse = new Hashtable<Integer, Integer>();
 
-    public void init(){
+    public void init() {
         System.out.println("Affine Cipher");
         String filepath = utils.getFilePathFromFile();
         String text = utils.getMessageFromFile(filepath);
 
         String cryptChoice = menu.initCryptMenu();
 
-        //int key = 1;
+        // int key = 1;
         int key = utils.getIntKey();
         int a = utils.getA();
-        //int a = 1;
+        // int a = 1;
 
-        switch(cryptChoice){
+        switch (cryptChoice) {
             case "e":
             case "E":
-                String encryption = encrypt(text,key,a);
+                String encryption = encrypt(text, key, a);
                 System.out.println(encryption);
                 break;
             case "d":
             case "D":
-                String decryption = decrypt(text,key,a);
+                String decryption = decrypt(text, key, a);
                 System.out.println(decryption);
                 break;
             default:
@@ -34,31 +37,30 @@ public class Affine {
         System.out.println("Encrypting " + m);
         String answer = "";
         for (int i = 0; i < m.length(); i++)
-            answer = answer + encryptLetter(m.charAt(i),k,a);
+            answer = answer + encryptLetter(m.charAt(i), k, a);
         return answer;
     }
 
-    
     private String decrypt(String m, int k, int a) {
-       //System.out.println("Decrypting " + m);
-       String answer = "";
-       int multInverse = 0;
-       int aInverse = 0;
+        // System.out.println("Decrypting " + m);
+        String answer = "";
+        int aInverse = 0;
 
-       for (int i = 0; i < 26; i++)
-       {
-            multInverse = (a * i) % 26;
-
-            if (multInverse == 1)
-            {
-                aInverse = i;
-            }
-       }
+        for (int i = 1; i <= 26; i++) {
+            if (i % 2 != 0) {
+                aInverse = modInverse(i, 26);
+                if (aInverse != 1) {
+                    multInverse.put(i, aInverse);
+                }
+            }    
+        }
+        System.out.println(multInverse);
+        
        for(int i =0; i < m.length(); i++) 
        {
            if(m.charAt(i) != ' ')
            {
-               answer = answer + decryptLetter(m.charAt(i), k, aInverse);
+               answer = answer + decryptLetter(m.charAt(i), k, a);
            }
        }
        return answer;
@@ -95,4 +97,13 @@ public class Affine {
       }
 	  return c;
     }
+
+    static int modInverse(int a, int m) 
+    { 
+        a = a % m; 
+        for (int x = 1; x < m; x++) 
+           if ((a * x) % m == 1) 
+              return x; 
+        return 1; 
+    } 
 }
