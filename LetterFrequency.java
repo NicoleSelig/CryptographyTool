@@ -96,41 +96,5 @@ public class LetterFrequency {
             a[i] = a[i + 1];
         a[25] = temp;
     }
-    
-    
-    
-    // public Map<Character, Integer> sortcharCountByValues(double[] cosetFrequencies) {
-    //     List<Character> mapKeys = new ArrayList<>(cosetFrequencies.keySet());
-    //     List<Integer> mapValues = new ArrayList<>(cosetFrequencies.values());
-    //     Collections.sort(mapValues);
-    //     Collections.sort(mapKeys);
-
-    //     LinkedHashMap<Character, Integer> sortedMap = new LinkedHashMap<>();
-
-    //     Iterator<Integer> valueIt = mapValues.iterator();
-    //     while (valueIt.hasNext()) {
-    //         int val = valueIt.next();
-    //         Iterator<Character> keyIt = mapKeys.iterator();
-
-    //         while (keyIt.hasNext()) {
-    //             Character key = keyIt.next();
-    //             int comp1 = cosetFrequencies.get(key);
-    //             int comp2 = val;
-
-    //             if (comp1 == comp2){
-    //                 keyIt.remove();
-    //                 sortedMap.put(key,val);
-    //                 break;
-    //             }
-
-    //         }
-    //     }
-    //     System.out.println("Sorted Char Count: \n" + sortedMap);
-    //     return sortedMap;
-    // }
-
-
-
-
 
 }

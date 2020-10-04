@@ -39,22 +39,25 @@ public class Menu {
             case "C":
                 Ceasar ceasar = new Ceasar();
                 ceasar.init();
+                initCipherMenu();
                 break;
             case "s":
             case "S":
                 Substitution sub = new Substitution();
                 sub.init();
+                initCipherMenu();
                 break;
             case "a":
             case "A":
                 Affine affine = new Affine();
                 affine.init();
+                initCipherMenu();
                 break;
             case "v":
             case "V":
                 Veginere veginere = new Veginere();
                 veginere.init();
-                initCryptMenu();
+                initCipherMenu();
                 break;
             case "q":
             case "Q":

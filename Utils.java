@@ -44,6 +44,22 @@ public class Utils {
         return key;
     }
 
+  
+       
+        
+
+    public int getKeyGuess()
+    {
+        Scanner scanKey = new Scanner(System.in);
+        System.out.println("Guess the Keyword Length: ");
+        
+        int key;
+        key = scanKey.nextInt();
+
+        System.out.println("Key is " + key);
+        return key;
+    }
+
     public String getStringKey()
     {
         Scanner scanKey = new Scanner(System.in);

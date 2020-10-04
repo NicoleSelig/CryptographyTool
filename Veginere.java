@@ -1,8 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class Veginere {
@@ -14,103 +12,150 @@ public class Veginere {
     Map<Character, Double> englishMap = lf.getEnglishFrequencyMap();
     String alphaString = "abcdefghijklmnopqrstuvwxyz";
     int shift = 4;
+    int keyGuess;
+    String keyword;
 
     public void init() {
         System.out.println("Veginere Cipher");
         String filepath = utils.getFilePathFromFile();
         String text = utils.getMessageFromFile(filepath);
-
         String cryptChoice = menu.initCryptMenu();
 
         switch (cryptChoice) {
             case "e":
             case "E":
-                // String encryption = encrypt(text, key);
-                System.out.println("encryption");
+                String encryption = encrypt(text, keyword);
+                System.out.println(encryption);
                 break;
             case "d":
             case "D":
                 // String decryption = decrypt(text, key);
                 System.out.println("decryption");
-                decrypt(text);
+                boolean notDone = true;
+                while (notDone){
+                    decrypt(text);
+                    System.out.println("Did your guess give you the right key?\n No, Guess Again -- N \n Yes, I have plaintext! -- Y");
+                    Scanner in = new Scanner(System.in);
+                    String input = in.next();
+                    System.out.println(input);
+                    switch(input){
+                        case "y":
+                        case "Y":
+                            notDone = false;
+                            break;
+                        case "N":
+                        case "n":
+                            notDone = true;
+                        default:
+                            System.out.println("Wrong Input. Try Again");
+                    }
+                }
                 break;
             default:
                 System.out.println("Error with Ceasar Initialization");
         }
     }
 
-    public void decrypt(String m) {
+    String encrypt(String m, String key) {
+        //prep the strings
+        String [] mArr = m.split("(?!^)");
+        String[] keyArr = key.split("(?!^)");
+
+        //convert the plaintext to index representation
+        int [] mIndeces = convertToIndeces(mArr, mArr.length);
+
+        //convert the key to indeces and repeat them across the length of the plaintext
+        int [] keyIndeces = convertToIndeces(keyArr, keyArr.length);
+        int [] cipherArr = repeat(keyIndeces, mArr.length);
         
-        // System.out.println("Decrypting " + m);
+        int [] cipherTextIndeces = getNewIndices(mIndeces, cipherArr);
+
+        String [] cipherText = getTextFromIndeces(cipherTextIndeces);
+        
+        return "Cipher Text: \n" + Arrays.toString(cipherText);
+
+    }
+
+    void decrypt(String m) {
+        
+        //System.out.println("Decrypting " + m);
+
+        //prepare the string
         String text = m.replaceAll(" ", "");
-        //System.out.println("Fixed text: " + text);
-
-        int keyGuess = 5;
+    
+        //get the frequencies of letters in the string
         double[] frequencies = lf.findFrequencies(m);
-        //System.out.println("cipher text fequencies: \n" + Arrays.toString(frequencies));
 
+        //find the index of coincidence
         double indexOfCoincidence = lf.dotProduct(frequencies, frequencies);
-        //System.out.println("Index of Coincidence of cipher text: \n" + indexOfCoincidence);
+        
+        //give an estimate length of key, but ask the user to make their own guess
+        //the estimate can be off by several letters
         int ApproxKeyLength = estimateKeywordLength(indexOfCoincidence, m.length());
-        System.out.println("Approx keylength of cipher text: \n" + ApproxKeyLength);
+        System.out.println("The Approximate keyword length is: " + ApproxKeyLength + "\nBut this approximation may be off by a few letters\n");
+        keyGuess = utils.getKeyGuess();
+
+
         String[] keywordArr = new String[keyGuess];
         String coset= ""; 
         for (int i = 0; i < keyGuess; i ++){
+            
+            //find a coset shift of every nth letter
             coset = everyNth(text, i, keyGuess);
-            System.out.println("Coset " + i + ": \n" + coset);
+            
+            //find the coset and english frequencies
             double[] cosetFreq = lf.findFrequencies(coset);
             Object[] ef = englishMap.values().toArray();
             double[] englishFreq = Arrays.stream(ef).mapToDouble(num -> Double.parseDouble(num.toString())).toArray();
-            Map<Character, Double> letterCount = lf.countLetters(coset);
-            //System.out.println("coset letter count: \n" + letterCount.toString());
-            //System.out.println("Coset & english dot product:");
+        
+            //find the dot product of the two frequencies for each coset shift
             double [] dotProductArr = new double[26];
-
             for(int shiftAmt = 0; shiftAmt < 26; shiftAmt++)
             {
-                //System.out.println("Shift: " + shiftAmt + " dotProduct: " + lf.dotProduct(cosetFreq, englishFreq));
                 dotProductArr[shiftAmt] = lf.dotProduct(cosetFreq, englishFreq);
-                // shiftMap.put(shiftAmt, lf.dotProduct(cosetFreq, englishFreq));
                 lf.shift(englishFreq);
             }
-
-            //System.out.println(Arrays.toString(dotProductArr));
-            double maxDot = lf.maxValue(cosetFreq);
-            System.out.println("max Dot: " + maxDot);
-            int maxShift = getIndexOfLargest(dotProductArr);
-            int neededindex = 26 - maxShift;
-            System.out.println(maxShift + " : " + alphabet[neededindex]);
             
+            //the max shift is the index of the largest dot product
+            int maxShift = getIndexOfLargest(dotProductArr);
+
+            //use the max shift to find the letter 
+            int neededindex = 26 - maxShift;
+            //System.out.println(maxShift + " : " + alphabet[neededindex]);
+
+            //add the letter to the keyword
             keywordArr[i] = alphabet[neededindex];
             
         }
 
+        //reveal the keyword
         StringBuilder keyword = new StringBuilder();
         for(String s : keywordArr) {
             keyword.append(s);
         }
         String keywordStr = keyword.toString();
-        
-        System.out.println(keywordStr);
+        System.out.println("The Keyword is: " + keywordStr);
 
+        //convert the keyword to an array of indeces
         int[] keywordIndeces = convertToIndeces(keywordArr, keywordArr.length);
         int[] cipherTextIndeces = convertToIndeces(text.toLowerCase().split(""), text.length());
-        System.out.println(Arrays.toString(cipherTextIndeces));
+        // System.out.println(Arrays.toString(cipherTextIndeces));
         // System.out.println(Arrays.toString(keywordIndeces));
 
+        //repeat them across the length of the message
         int[] keyIndecesRepeated = repeat(keywordIndeces, text.length());
-        
-        System.out.println(Arrays.toString(keyIndecesRepeated));
+        // System.out.println(Arrays.toString(keyIndecesRepeated));
 
-        int[] plainTextIndeces = getPlainTextIndices(cipherTextIndeces, keyIndecesRepeated);
+        //TRANSLATE
+        int[] plainTextIndeces = getNewIndices(cipherTextIndeces, keyIndecesRepeated);
         System.out.println("pain text indeces");
-        System.out.println(Arrays.toString(plainTextIndeces));
-        String [] plainText = getplainText(plainTextIndeces);
-
+        // System.out.println(Arrays.toString(plainTextIndeces));
+        String [] plainText = getTextFromIndeces(plainTextIndeces);
         System.out.println(Arrays.toString(plainText));
      }
 
-    String[] getplainText(int[] arr) {
+
+    String[] getTextFromIndeces(int[] arr) {
         String[] plainText = new String[arr.length];
         for (int i = 0; i < arr.length; i++)
         {
@@ -119,7 +164,7 @@ public class Veginere {
         return plainText;
     }
 
-    int[] getPlainTextIndices(int[] cipher_text, int[] key) 
+    int[] getNewIndices(int[] cipher_text, int[] key) 
         { 
             for(int i = 0; i < cipher_text.length; i++)
             {
@@ -129,14 +174,23 @@ public class Veginere {
             return cipher_text;
         } 
 
-     public int[] convertToIndeces(String [] arr, int length) {
-     int[] arrOfIndeces = new int[length];
-        for(int i=0; i<length; i++)
-        {
-            arrOfIndeces[i]= Arrays.binarySearch(alphabet, arr[i]);
-        }
-        return arrOfIndeces;
+     int[] convertToIndeces(String [] arr, int length) {
+        int[] arrOfIndeces = new int[length];
+            for(int i=0; i<length; i++)
+            {
+                arrOfIndeces[i]= Arrays.binarySearch(alphabet, arr[i]);
+            }
+            return arrOfIndeces;
     }
+
+     int[] convertCharToIndeces(char [] arr, int length) {
+        int[] arrOfIndeces = new int[length];
+           for(int i=0; i<length; i++)
+           {
+               arrOfIndeces[i]= Arrays.binarySearch(alphabet, arr[i]);
+           }
+           return arrOfIndeces;
+       }
 
      int estimateKeywordLength(double indexOfCoincidence, int textsize) {
         double keylength = (0.0265*textsize)/((indexOfCoincidence*textsize-1) + 0.0656 - (0.0385*textsize));
