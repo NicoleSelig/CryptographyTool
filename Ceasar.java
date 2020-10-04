@@ -1,3 +1,4 @@
+
 public class Ceasar {
 
     Menu menu = new Menu();
@@ -54,11 +55,14 @@ public class Ceasar {
     }
 
     private String decrypt(String m, int k) {
-        System.out.println("Decrypting " + m);
+        System.out.println("Decrypting " + m);        
         k = 26 - k;
+
         String answer = "";
-        for (int i = 0; i < m.length(); i++)
-            answer = answer + shiftLetter(m.charAt(i),k);
+        for (int j = 0; j < m.length(); j++) {
+            answer = answer + shiftLetter(m.charAt(j),k);
+        }
+
         return answer;
     }
 }

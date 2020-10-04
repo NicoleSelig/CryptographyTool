@@ -51,7 +51,7 @@ public class Substitution {
     private String decrypt(final String m, final String[] keyArray) {
         LetterFrequency lf = new LetterFrequency();
         Map<Character, Double> lfDictionary = lf.getEnglishFrequencyMap();
-        System.out.println("LF Dictionary:\n"+ lfDictionary);
+        //System.out.println("LF Dictionary:\n"+ lfDictionary);
         
         lf.findFrequencies(m);
 

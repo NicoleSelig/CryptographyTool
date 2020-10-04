@@ -9,6 +9,7 @@ public class Utils {
         System.out.println("What is the filename you want to analyze?");
         final String filePath = inputScan.nextLine();
         System.out.println("filepath: " + filePath);
+        
         return filePath;  
     }
 
@@ -41,12 +42,9 @@ public class Utils {
         key = scanKey.nextInt();
 
         System.out.println("Key is " + key);
-        return key;
-    }
-
-  
-       
         
+        return key;
+    }   
 
     public int getKeyGuess()
     {
@@ -57,6 +55,7 @@ public class Utils {
         key = scanKey.nextInt();
 
         System.out.println("Key is " + key);
+        
         return key;
     }
 
@@ -68,6 +67,7 @@ public class Utils {
         String key;
         key = scanKey.next();
         System.out.println("Key is " + key);
+        
         return key;
     }
 
@@ -77,6 +77,7 @@ public class Utils {
         System.out.println("Enter your constant: ");
         int constant = scanConstant.nextInt();
         System.out.println("Constant is " + constant);
+        scanConstant.close();
         return constant;
     }
     
@@ -91,6 +92,29 @@ public class Utils {
         System.out.println("Update File");
     }
 
+    public int getIndexOfLargest(double[] array )
+    {
+    if ( array == null || array.length == 0 ) return -1; // null or empty
+
+    int largest = 0;
+    for ( int i = 1; i < array.length; i++ )
+    {
+        if ( array[i] > array[largest] ) largest = i;
+    }
+    return largest; // position of the first largest found
+    }
+
     
+    String everyNth(String str, int numStart, int k)
+    {
+        String coset = "";
+        for (int i = numStart; i < str.length(); i+=k)
+        {
+           
+               coset += str.charAt(i);
+           
+        }
+        return coset;
+    }
 
 }

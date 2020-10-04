@@ -39,30 +39,25 @@ public class Menu {
             case "C":
                 Ceasar ceasar = new Ceasar();
                 ceasar.init();
-                initCipherMenu();
                 break;
             case "s":
             case "S":
                 Substitution sub = new Substitution();
                 sub.init();
-                initCipherMenu();
                 break;
             case "a":
             case "A":
                 Affine affine = new Affine();
                 affine.init();
-                initCipherMenu();
                 break;
             case "v":
             case "V":
                 Veginere veginere = new Veginere();
                 veginere.init();
-                initCipherMenu();
                 break;
             case "q":
             case "Q":
                 System.out.println("Quit");
-                scanCipher.close();
                 System.out.println("Good Bye!");
                 System.exit(0);
                 break;
@@ -76,6 +71,7 @@ public class Menu {
                 chooseCipher();
                 break;
         }
+        
     }
 
     // recieves the users choice chooses a crypt
@@ -93,7 +89,6 @@ public class Menu {
                 return menuItem;
             case "q":
             case "Q":
-                scanCrypt.close();
                 System.out.println("Good Bye!");
                 System.exit(0);
                 return menuItem;

@@ -49,6 +49,7 @@ public class Veginere {
                         default:
                             System.out.println("Wrong Input. Try Again");
                     }
+                    in.close();
                 }
                 break;
             default:
@@ -101,7 +102,7 @@ public class Veginere {
         for (int i = 0; i < keyGuess; i ++){
             
             //find a coset shift of every nth letter
-            coset = everyNth(text, i, keyGuess);
+            coset = utils.everyNth(text, i, keyGuess);
             
             //find the coset and english frequencies
             double[] cosetFreq = lf.findFrequencies(coset);
@@ -117,7 +118,7 @@ public class Veginere {
             }
             
             //the max shift is the index of the largest dot product
-            int maxShift = getIndexOfLargest(dotProductArr);
+            int maxShift = utils.getIndexOfLargest(dotProductArr);
 
             //use the max shift to find the letter 
             int neededindex = 26 - maxShift;
@@ -148,7 +149,7 @@ public class Veginere {
 
         //TRANSLATE
         int[] plainTextIndeces = getNewIndices(cipherTextIndeces, keyIndecesRepeated);
-        System.out.println("pain text indeces");
+       
         // System.out.println(Arrays.toString(plainTextIndeces));
         String [] plainText = getTextFromIndeces(plainTextIndeces);
         System.out.println(Arrays.toString(plainText));
@@ -205,29 +206,9 @@ public class Veginere {
         return dup;
     }
  
-     String everyNth(String str, int numStart, int k)
-     {
-         String coset = "";
-         for (int i = numStart; i < str.length(); i+=k)
-         {
-            
-                coset += str.charAt(i);
-            
-         }
-         return coset;
-     }
+ 
 
-     public int getIndexOfLargest(double[] array )
-    {
-    if ( array == null || array.length == 0 ) return -1; // null or empty
-
-    int largest = 0;
-    for ( int i = 1; i < array.length; i++ )
-    {
-        if ( array[i] > array[largest] ) largest = i;
-    }
-    return largest; // position of the first largest found
-    }
+   
      
 
     

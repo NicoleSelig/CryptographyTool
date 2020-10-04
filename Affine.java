@@ -34,76 +34,57 @@ public class Affine {
     }
 
     private String encrypt(String m, int k, int a) {
-        System.out.println("Encrypting " + m);
-        String answer = "";
-        for (int i = 0; i < m.length(); i++)
-            answer = answer + encryptLetter(m.charAt(i), k, a);
-        return answer;
+        /// Cipher Text initially empty 
+        char [] mChar = m.toCharArray(); 
+        String cipher = "";
+        for (int i = 0; i < mChar.length; i++) 
+        { 
+            if (mChar[i] != ' ')  
+            { 
+                cipher = cipher 
+                        + (char) ((((a * (mChar[i] - 'A')) + k) % 26) + 'A'); 
+            } else // else simply append space character 
+            { 
+                cipher += mChar[i]; 
+            } 
+        } 
+        return cipher; 
     }
 
     private String decrypt(String m, int k, int a) {
-        // System.out.println("Decrypting " + m);
-        String answer = "";
-        int aInverse = 0;
-
-        for (int i = 1; i <= 26; i++) {
-            if (i % 2 != 0) {
-                aInverse = modInverse(i, 26);
-                if (aInverse != 1) {
-                    multInverse.put(i, aInverse);
-                }
-            }    
-        }
-        System.out.println(multInverse);
-        
-       for(int i =0; i < m.length(); i++) 
-       {
-           if(m.charAt(i) != ' ')
-           {
-               answer = answer + decryptLetter(m.charAt(i), k, a);
-           }
-       }
-       return answer;
+        String msg = ""; 
+        int a_inv = 0; 
+        int flag = 0; 
+  
+        //Find a^-1 (the multiplicative inverse of a  
+        //in the group of integers modulo m.)  
+        for (int i = 0; i < 26; i++)  
+        { 
+            flag = (a * i) % 26; 
+  
+            // Check if (a*i)%26 == 1, 
+            // then i will be the multiplicative inverse of a 
+            if (flag == 1)  
+            { 
+                a_inv = i; 
+            } 
+        } 
+        for (int i = 0; i < m.length(); i++)  
+        { 
+             //Applying decryption formula a^-1 ( x - b ) mod m  
+            if (m.charAt(i) != ' ')  
+            { 
+                msg = msg + (char) (((a_inv *  
+                        ((m.charAt(i) + 'A' - k)) % 26)) + 'A'); 
+            }  
+            else //else simply append space characte 
+            { 
+                msg += m.charAt(i); 
+            } 
+        } 
+  
+        return msg;  
+  
     }
 
-    private char encryptLetter(char c, int k, int a){
-        if('a'<=c && c<='z')
-	  {
-		  c=(char)((((a * (c - 'a')) + k) % 26) + 'a');
-          if(c>'z') 
-            c=(char)((int)c-26);
-	  }
-	  if('A'<=c && c<='Z')
-	  {
-		  c=(char)((((a * (c - 'A')) + k) % 26) + 'A');
-          if(c>'Z') 
-            c=(char)((int)c-26);
-      }
-	  return c;
-    }
-
-    private char decryptLetter(char c, int k, int aInverse){
-        if('a'<=c && c<='z')
-	  {
-		  c=(char)((((aInverse * (c + 'a')) - k) % 26) + 'a');
-          if(c>'z') 
-            c=(char)((int)c-26);
-	  }
-	  if('A'<=c && c<='Z')
-	  {
-		  c=(char)((((aInverse * (c + 'A')) - k) % 26) + 'A');
-          if(c>'Z') 
-            c=(char)((int)c-26);
-      }
-	  return c;
-    }
-
-    static int modInverse(int a, int m) 
-    { 
-        a = a % m; 
-        for (int x = 1; x < m; x++) 
-           if ((a * x) % m == 1) 
-              return x; 
-        return 1; 
-    } 
-}
+}    
