@@ -2,8 +2,14 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
-
+/**
+ * Veginere Class
+ * @author Nicole Selig
+ * all functions concerning the veginere cipher
+ */
 public class Veginere {
+
+    //class variables
     Menu menu = new Menu();
     Utils utils = new Utils();
     String[] alphabet = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
@@ -15,9 +21,14 @@ public class Veginere {
     int keyGuess;
     String keyword;
 
+    /**
+     * init()
+     * initializes the veginere cipher
+     * determines encryption or decryption
+     */
     public void init() {
         System.out.println("Veginere Cipher");
-        String filepath = utils.getFilePathFromFile();
+        String filepath = utils.getFilePath();
         String text = utils.getMessageFromFile(filepath);
         String cryptChoice = menu.initCryptMenu();
 
@@ -32,24 +43,20 @@ public class Veginere {
                 // String decryption = decrypt(text, key);
                 System.out.println("decryption");
                 boolean notDone = true;
-                while (notDone){
+
+                Scanner in = new Scanner(System.in); 
+                //if the user did not guess the right keyword
+                while (notDone == true) {
                     decrypt(text);
-                    System.out.println("Did your guess give you the right key?\n No, Guess Again -- N \n Yes, I have plaintext! -- Y");
-                    Scanner in = new Scanner(System.in);
+                    System.out.println("Did your guess give you the right key?\nNo, Guess Again -- N \nYes, I have plaintext! -- Y");
                     String input = in.next();
                     System.out.println(input);
-                    switch(input){
-                        case "y":
-                        case "Y":
-                            notDone = false;
-                            break;
-                        case "N":
-                        case "n":
-                            notDone = true;
-                        default:
-                            System.out.println("Wrong Input. Try Again");
+                    if (input.equals("n") || input.equals("N")){
+                        notDone = true;
                     }
-                    in.close();
+                    else if (input == "Y" || input == "y"){
+                        notDone = false;
+                    }
                 }
                 break;
             default:
@@ -57,6 +64,13 @@ public class Veginere {
         }
     }
 
+    /**
+     * encrypt()
+     * @param m
+     * @param key
+     * @return
+     * encrypts the message
+     */
     String encrypt(String m, String key) {
         //prep the strings
         String [] mArr = m.split("(?!^)");
@@ -77,6 +91,11 @@ public class Veginere {
 
     }
 
+    /**
+     * decrypt()
+     * @param m
+     * decrypts the message automatically upon the correct keyword length
+     */
     void decrypt(String m) {
         
         //System.out.println("Decrypting " + m);
@@ -156,6 +175,12 @@ public class Veginere {
      }
 
 
+    /**
+     * getTextFromIndeces()
+     * @param arr
+     * @return
+     * converts an array of character indeces to its string equivalent
+     */
     String[] getTextFromIndeces(int[] arr) {
         String[] plainText = new String[arr.length];
         for (int i = 0; i < arr.length; i++)
@@ -165,6 +190,13 @@ public class Veginere {
         return plainText;
     }
 
+    /**
+     * getNewIndices()
+     * @param cipher_text
+     * @param key
+     * @return
+     * subtracts the indices of the cipher text with the key array and returns a new array of indices
+     */
     int[] getNewIndices(int[] cipher_text, int[] key) 
         { 
             for(int i = 0; i < cipher_text.length; i++)
@@ -175,6 +207,13 @@ public class Veginere {
             return cipher_text;
         } 
 
+    /**
+     * convertToIndeces()
+     * @param arr
+     * @param length
+     * @return
+     * converts a string array into an array of indeces
+     */
      int[] convertToIndeces(String [] arr, int length) {
         int[] arrOfIndeces = new int[length];
             for(int i=0; i<length; i++)
@@ -184,6 +223,13 @@ public class Veginere {
             return arrOfIndeces;
     }
 
+    /**
+     * convertCharToIndeces()
+     * @param arr
+     * @param length
+     * @return
+     * converts a char array into an array of it's indeces
+     */
      int[] convertCharToIndeces(char [] arr, int length) {
         int[] arrOfIndeces = new int[length];
            for(int i=0; i<length; i++)
@@ -193,11 +239,26 @@ public class Veginere {
            return arrOfIndeces;
        }
 
+     /**
+      * estimateKeyWordLength()
+      * @param indexOfCoincidence
+      * @param textsize
+      * @return
+      *estimates the keyword length using the index of coincidence
+      */
      int estimateKeywordLength(double indexOfCoincidence, int textsize) {
         double keylength = (0.0265*textsize)/((indexOfCoincidence*textsize-1) + 0.0656 - (0.0385*textsize));
         return (int) Math.ceil(keylength);
      }
 
+     /**
+      * repeat()
+      * @param <Integer>
+      * @param arr
+      * @param newLength
+      * @return
+      * repeats the indeces of the key for the entire length of the cipher text
+      */
      public <Integer> int[] repeat(int[] arr, int newLength) {
         int[] dup = Arrays.copyOf(arr, newLength);
         for (int last = arr.length; last != 0 && last < newLength; last <<= 1) {

@@ -1,18 +1,30 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+
+/**
+ * Substitution Class
+ * @author Nicole Selig
+ * handles all functions concerning the Substitution Cipher
+ */
 
 public class Substitution {
+    
+    //class variables
     Menu menu = new Menu();
     Utils utils = new Utils();
     Character[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
             's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
     List<Character> alphaList = Arrays.asList(alphabet);
 
+    /**
+     * init()
+     * initiates the Substitution cipher process
+     * determins encryption or decryption
+     */
     public void init() {
         System.out.println("Substitution Cipher");
-        String filepath = utils.getFilePathFromFile();
+        String filepath = utils.getFilePath();
         String text = utils.getMessageFromFile(filepath);
 
         String cryptChoice = menu.initCryptMenu();
@@ -37,6 +49,13 @@ public class Substitution {
         }
     }
 
+    /**
+     * encrypt()
+     * @param m
+     * @param keyArray
+     * @return String
+     * encrypts the message
+     */
     private String encrypt(final String m, String[] keyArray) {
         System.out.println("Encrypting " + m);
         String answer = "";
@@ -48,10 +67,15 @@ public class Substitution {
         return answer;
     }
 
+    /**
+     * decrypt()
+     * @param m
+     * @param keyArray
+     * @return String
+     * decrypts the message
+     */
     private String decrypt(final String m, final String[] keyArray) {
         LetterFrequency lf = new LetterFrequency();
-        Map<Character, Double> lfDictionary = lf.getEnglishFrequencyMap();
-        //System.out.println("LF Dictionary:\n"+ lfDictionary);
         
         lf.findFrequencies(m);
 
@@ -65,8 +89,16 @@ public class Substitution {
         return answer;
     }
 
-     //helper function that substitutes a chararcter from an alphabet array.
-    //the index of the old alphabet = the index of the new alphabet
+    /**
+     * substitute()
+     * @param c
+     * @param oldAlpha
+     * @param newAlpha
+     * @return
+     * helper function that substitutes a chararcter from an alphabet array.
+     * the index of the old alphabet = the index of the new alphabet
+     */
+     
     private char substitute(char c, List<Character> oldAlpha, List<Character> newAlpha)
     { 
         Character newCharacter = null;
@@ -87,7 +119,14 @@ public class Substitution {
         return newCharacter;  
     }
 
-     //private helper function that creates a new 'substitution' alphabet using a keyword.
+    /**
+     * getNewAlphabet()
+     * @param alphabet
+     * @param keyArray
+     * @return ArrayList
+     * private helper function that creates a new 'substitution' alphabet using a keyword.
+     */
+     
      private ArrayList<Character> getNewAlphabet(Character[] alphabet, String[] keyArray)
      {
          System.out.println("Creating new alphabet...");

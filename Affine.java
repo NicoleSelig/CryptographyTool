@@ -1,13 +1,24 @@
 import java.util.Hashtable;
 
+
+/**
+ * Affine Class
+ * @author Nicole Selig
+ * all functions concerning the Affine Cipher
+ */
 public class Affine {
     Menu menu = new Menu();
     Utils utils = new Utils();
     Hashtable<Integer, Integer> multInverse = new Hashtable<Integer, Integer>();
 
+    /** init()
+     * initializes the affine cipher process
+     * checks for encryption or decryption
+    */
+    
     public void init() {
         System.out.println("Affine Cipher");
-        String filepath = utils.getFilePathFromFile();
+        String filepath = utils.getFilePath();
         String text = utils.getMessageFromFile(filepath);
 
         String cryptChoice = menu.initCryptMenu();
@@ -33,6 +44,13 @@ public class Affine {
         }
     }
 
+    /**encrypt()
+     * @param m //message
+     * @param k //key
+     * @param a //constant
+     * encrypts the message
+    */
+    
     private String encrypt(String m, int k, int a) {
         /// Cipher Text initially empty 
         char [] mChar = m.toCharArray(); 
@@ -50,6 +68,13 @@ public class Affine {
         } 
         return cipher; 
     }
+
+    /**decrypt()
+     * @param m //message
+     * @param k //key
+     * @param a //constant
+     * decrypts the message
+     */
 
     private String decrypt(String m, int k, int a) {
         String msg = ""; 

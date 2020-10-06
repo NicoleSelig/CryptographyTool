@@ -1,7 +1,15 @@
 import java.util.*;
-import java.util.Map.Entry;
+
+/**Letter Frequency class
+ * All functions and tables dealing with calculating letter frequencies
+ */
 public class LetterFrequency {
 
+
+    /**getEnglishFrequencyMap()
+     * @return Map
+     * returns a map of known english letter frequencies
+     */
     public Map<Character, Double> getEnglishFrequencyMap(){
         HashMap<Character, Double> lf = new HashMap<Character,Double>();
         lf.put('e', .12702);
@@ -33,6 +41,13 @@ public class LetterFrequency {
         return lf;
     }
 
+    /**
+     * dotProduct()
+     * @param frequencies
+     * @param frequencies2
+     * @return Double
+     * returns the dot product of two frequency arrays
+     */
     public Double dotProduct(double[] frequencies, double[] frequencies2) {
         double sum = 0;
         for (int i = 0; i < 26; i++)
@@ -40,6 +55,11 @@ public class LetterFrequency {
         return sum;
     }
 
+    /**countLetters()
+     * @param m
+     * @return Map
+     * counts the instances of all letters in a message and places them in a hashmap
+     */
     public Map<Character, Double> countLetters(final String m) {
         // remove punctuation from text and convert all to lowercase
         String words = m.replaceAll("\\p{Punct}", "").toLowerCase();
@@ -63,12 +83,24 @@ public class LetterFrequency {
         return charCount; 
     }
 
+    /**
+     * maxValue()
+     * @param cosetFreq
+     * @return double
+     * returns the max value of a frequency array
+     */
     public double maxValue(double[] cosetFreq)
     {   
         double max = Arrays.stream(cosetFreq).max().getAsDouble();
         return max;
     }
 
+    /**
+     * findFrequencies()
+     * @param m
+     * @return double[]
+     * finds the frequency percentage of each character and stores them in an array
+     */
     public double[] findFrequencies(String m)
     {
         m = m.replaceAll(" ", "");
@@ -89,6 +121,11 @@ public class LetterFrequency {
         return frequencies;
     }
 
+    /**
+     * shift()
+     * @param a
+     * performs a total of 26 shifts to the frequencies
+     */
     public void shift(final double[] a) {
         final double temp = a[0];
     

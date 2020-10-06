@@ -1,5 +1,10 @@
 import java.util.*;
 
+
+/**Menu Class
+ * @author Nicole Selig
+ * all functions concerning the handling of a menu
+ */
 public class Menu {
     
 
